@@ -13,6 +13,12 @@ function normalizePort(val) {
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  next();
+});
+
 function onError(error) {
   if (error.syscall !== 'listen') { throw error; }
   switch (error.code) {
@@ -38,3 +44,4 @@ function onListening() {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
